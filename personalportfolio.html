@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Sections */
+        section {
+            padding: 100px 0;
+            min-height: 100vh;
+        }
+        
+        #about {
+            background: #f9f9f9;
+        }
+        
+        #projects {
+            background: #e9e9e9;
+        }
+        
+        #tools {
+            background: #f9f9f9;
+        }
+        
+        #contact {
+            background: #e9e9e9;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+            color: #2c3e50;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-img img {
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .project-info p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .project-links a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        /* Tools Section (Todo List) */
+        .todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        #todoInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        
+        #addTodoBtn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        #addTodoBtn:hover {
+            background: #2980b9;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 5px 15px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .todo-list {
+            list-style: none;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .todo-item:hover {
+            background: #f1f1f1;
+        }
+        
+        .todo-item.completed {
+            opacity: 0.7;
+        }
+        
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #777;
+        }
+        
+        .todo-checkbox {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .todo-text {
+            flex: 1;
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        .stats {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Product Listing Section */
+        .product-listing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filter-section, .sort-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .filter-section h2, .sort-section h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 5px 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover {
+            background: #e1e1e1;
+        }
+        
+        .filter-option.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .product-category {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .product-rating {
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: #27ae60;
+        }
+        
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #2c3e50;
+                padding: 20px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-img, .about-text {
+                min-width: 100%;
+            }
+            
+            .about-img {
+                margin-bottom: 30px;
+            }
+            
+            .input-container {
+                flex-direction: column;
+            }
+            
+            #todoInput {
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            
+            #addTodoBtn {
+                border-radius: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">My Portfolio</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="mine.jpg" alt="Profile Image">
+                </div>
+                <div class="about-text">
+                    <h3>Hi, I'm K Sravin Prathik</h3>
+                    <p>I'm a passionate web developer with expertise in HTML, CSS, and JavaScript. I love creating beautiful, functional websites that provide great user experiences.</p>
+                    <p>experience in front-end development, I've worked on various projects ranging from small business websites to complex web applications.</p>
+                    <p>When I'm not coding, you can find me hiking, reading tech blogs, or experimenting with new web technologies.</p>
+                    <div class="skills">
+                        <h4>Skills:</h4>
+                        <ul>
+                            <li>HTML5 & CSS3</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>React.js</li>
+                            <li>Node.js</li>
+                            <li>Responsive Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://imgs.search.brave.com/hGp6HG204eH_dq4yuAoIXWnaVDnWB11oLQs-4pZQ908/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2Y5LzNm/LzZiL2Y5M2Y2Yjli/OTk1M2FkMDE0ZTFi/MTIwOTJjMjAxMTdj/LmpwZw" alt="Project 1">
+                    </div>
+                    <div class="project-info">
+                        <h3>the-solar-system</h3>
+                        <p>this is the simple webpage about solar system.</p>
+                        <div class="project-links">
+                            <a href="project1.html">livedemo</a>
+                            <a href="https://github.com/Sravin07/the-solar-system">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://imgs.search.brave.com/EW3-7hOp9KPSp-sRHvgkg-vlnLAz7P9Ju1uAya9TZtg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTI2/ODQ2NTQxNS9waG90/by9xdWl6LXRpbWUt/Y29uY2VwdC1zcGVl/Y2gtYnViYmxlLXdp/dGgtcGVuY2lsLW9u/LXllbGxvdy1iYWNr/Z3JvdW5kLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1ab3dm/WXBDSmV5a25wV2hu/ZnlXcVYxX0lmNmFK/bUZVaVNxcXFFVUJo/dkFnPQ" alt="Project 2">
+                    </div>
+                    <div class="project-info">
+                        <h3>Interactive-Tech-Quiz</h3>
+                        <p>A responsive web application featuring a 5-question JavaScript quiz with real-time feedback, score tracking, and dynamic API data fetching - developed as Task 3 for Apex Planet's Internship Program..</p>
+                        <div class="project-links">
+                            <a href="task3.html">Live Demo</a>
+                            <a href="https://github.com/Sravin07/-Interactive-Tech-Quiz">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://imgs.search.brave.com/V4D_hOoyODBDGpHb8UrjitJihBCPxB5B7qAtlDOdbSE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/d2VhdGhlci1mb3Jl/Y2FzdC1tb2JpbGUt/YXBwbGljYXRpb25f/MTI4NC01OTA2MS5q/cGc_c2VtdD1haXNf/aHlicmlkJnc9NzQw" alt="Project 3">
+                    </div>
+                    <div class="project-info">
+                        <h3>Weather Dashboard</h3>
+                        <p>A weather application that displays current conditions and forecasts using data from a weather API.</p>
+                        <div class="project-links">
+                            <a href="#">Live Demo</a>
+                            <a href="https://github.com/Sravin07/Weather-App">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section (Todo List) -->
+    <section id="tools">
+        <div class="container">
+            <h2 class="section-title">Todo List App</h2>
+            <div class="todo-container">
+                <div class="input-container">
+                    <input type="text" id="todoInput" placeholder="Add a new task...">
+                    <button id="addTodoBtn">Add Task</button>
+                </div>
+                
+                <div class="filter-container">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button id="clearCompletedBtn">Clear Completed</button>
+                </div>
+                
+                <ul class="todo-list" id="todoList"></ul>
+                
+                <div class="stats" id="todoStats"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Listing Section -->
+    <section id="products">
+        <div class="container">
+            <h2 class="section-title">Product Listing Demo</h2>
+            <div class="product-listing-container">
+                <div class="controls">
+                    <div class="filter-section">
+                        <h2>Filter Products</h2>
+                        
+                        <div class="filter-group">
+                            <h3>Categories</h3>
+                            <div class="filter-options" id="categoryFilters">
+                                <div class="filter-option active" data-category="all">All</div>
+                                <div class="filter-option" data-category="electronics">Electronics</div>
+                                <div class="filter-option" data-category="clothing">Clothing</div>
+                                <div class="filter-option" data-category="home">Home</div>
+                                <div class="filter-option" data-category="books">Books</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h3>Price Range</h3>
+                            <div class="filter-options" id="priceFilters">
+                                <div class="filter-option active" data-price="all">All</div>
+                                <div class="filter-option" data-price="0-50">Under $50</div>
+                                <div class="filter-option" data-price="50-100">$50 - $100</div>
+                                <div class="filter-option" data-price="100-500">$100 - $500</div>
+                                <div class="filter-option" data-price="500-1000">$500 - $1000</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sort-section">
+                        <h2>Sort By</h2>
+                        <select id="sortSelect">
+                            <option value="default">Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Rating</option>
+                            <option value="name-asc">Name: A-Z</option>
+                            <option value="name-desc">Name: Z-A</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">LinkedIn</a> | 
+                <a href="#">GitHub</a> | 
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            // For this example, we'll just log it and show an alert
+            console.log({ name, email, message });
+            alert('Thank you for your message! I will get back to you soon.');
+            
+            // Reset the form
+            contactForm.reset();
+        });
+
+        // Todo List App
+        const todoInput = document.getElementById('todoInput');
+        const addTodoBtn = document.getElementById('addTodoBtn');
+        const todoList = document.getElementById('todoList');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const clearCompletedBtn = document.getElementById('clearCompletedBtn');
+        const todoStats = document.getElementById('todoStats');
+        
+        let currentTodoFilter = 'all';
+        
+        // Initialize the todo app
+        document.addEventListener('DOMContentLoaded', loadTodos);
+        
+        // Event Listeners
+        addTodoBtn.addEventListener('click', addTodo);
+        todoInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Set current filter and render tasks
+                currentTodoFilter = this.dataset.filter;
+                renderTodos();
+            });
+        });
+        
+        clearCompletedBtn.addEventListener('click', clearCompletedTodos);
+        
+        // Todo Functions
+        function addTodo() {
+            const todoText = todoInput.value.trim();
+            
+            if (todoText) {
+                // Create new task object
+                const newTodo = {
+                    id: Date.now(),
+                    text: todoText,
+                    completed: false
+                };
+                
+                // Get existing tasks from localStorage
+                let todos = getTodosFromStorage();
+                
+                // Add new task
+                todos.push(newTodo);
+                
+                // Save back to localStorage
+                saveTodosToStorage(todos);
+                
+                // Clear input
+                todoInput.value = '';
+                
+                // Render tasks
+                renderTodos();
+            }
+        }
+        
+        function renderTodos() {
+            // Get tasks from localStorage
+            let todos = getTodosFromStorage();
+            
+            // Filter tasks based on current filter
+            let filteredTodos = todos;
+            if (currentTodoFilter === 'active') {
+                filteredTodos = todos.filter(todo => !todo.completed);
+            } else if (currentTodoFilter === 'completed') {
+                filteredTodos = todos.filter(todo => todo.completed);
+            }
+            
+            // Clear task list
+            todoList.innerHTML = '';
+            
+            // Render each task
+            filteredTodos.forEach(todo => {
+                const todoItem = document.createElement('li');
+                todoItem.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                todoItem.dataset.id = todo.id;
+                
+                todoItem.innerHTML = `
+                    <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
+                    <span class="todo-text">${todo.text}</span>
+                    <button class="delete-btn">Delete</button>
+                `;
+                
+                // Add event listeners to the new elements
+                const checkbox = todoItem.querySelector('.todo-checkbox');
+                const deleteBtn = todoItem.querySelector('.delete-btn');
+                
+                checkbox.addEventListener('change', function() {
+                    toggleTodoCompletion(todo.id, this.checked);
+                });
+                
+                deleteBtn.addEventListener('click', function() {
+                    deleteTodo(todo.id);
+                });
+                
+                todoList.appendChild(todoItem);
+            });
+            
+            // Update stats
+            updateTodoStats();
+        }
+        
+        function toggleTodoCompletion(todoId, isCompleted) {
+            let todos = getTodosFromStorage();
+            
+            // Find the task and update its completion status
+            todos = todos.map(todo => {
+                if (todo.id === todoId) {
+                    return { ...todo, completed: isCompleted };
+                }
+                return todo;
+            });
+            
+            // Save back to localStorage
+            saveTodosToStorage(todos);
+            
+            // Re-render tasks
+            renderTodos();
+        }
+        
+        function deleteTodo(todoId) {
+            let todos = getTodosFromStorage();
+            
+            // Filter out the task to delete
+            todos = todos.filter(todo => todo.id !== todoId);
+            
+            // Save back to localStorage
+            saveTodosToStorage(todos);
+            
+            // Re-render tasks
+            renderTodos();
+        }
+        
+        function clearCompletedTodos() {
+            let todos = getTodosFromStorage();
+            
+            // Filter out completed tasks
+            todos = todos.filter(todo => !todo.completed);
+            
+            // Save back to localStorage
+            saveTodosToStorage(todos);
+            
+            // Re-render tasks
+            renderTodos();
+        }
+        
+        function updateTodoStats() {
+            const todos = getTodosFromStorage();
+            const totalTodos = todos.length;
+            const completedTodos = todos.filter(todo => todo.completed).length;
+            const activeTodos = totalTodos - completedTodos;
+            
+            todoStats.textContent = `${activeTodos} active, ${completedTodos} completed, ${totalTodos} total`;
+        }
+        
+        // LocalStorage functions for todos
+        function getTodosFromStorage() {
+            const todosJSON = localStorage.getItem('todos');
+            return todosJSON ? JSON.parse(todosJSON) : [];
+        }
+        
+        function saveTodosToStorage(todos) {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        
+        function loadTodos() {
+            renderTodos();
+        }
+
+        // Product Listing App
+       const products = [
+    { id: 1, name: "Wireless Headphones", category: "electronics", price: 99.99, rating: 4.5, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=200&fit=crop" },
+    { id: 2, name: "Smartphone", category: "electronics", price: 699.99, rating: 4.8, image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=300&h=200&fit=crop" },
+    { id: 3, name: "Laptop", category: "electronics", price: 999.99, rating: 4.7, image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=200&fit=crop" },
+    { id: 4, name: "T-Shirt", category: "clothing", price: 19.99, rating: 4.2, image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=300&h=200&fit=crop" },
+    { id: 5, name: "Jeans", category: "clothing", price: 49.99, rating: 4.3, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=300&h=200&fit=crop" },
+    { id: 6, name: "Coffee Maker", category: "home", price: 79.99, rating: 4.6, image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300&h=200&fit=crop" },
+    { id: 7, name: "Blender", category: "home", price: 39.99, rating: 4.1, image: "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=300&h=200&fit=crop" },
+    { id: 8, name: "Novel", category: "books", price: 14.99, rating: 4.4, image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=200&fit=crop" },
+    { id: 9, name: "Cookbook", category: "books", price: 24.99, rating: 4.0, image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=300&h=200&fit=crop" },
+    { id: 10, name: "Smart Watch", category: "electronics", price: 199.99, rating: 4.7, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=200&fit=crop" },
+    { id: 11, name: "Desk Lamp", category: "home", price: 29.99, rating: 4.3, image: "https://images.unsplash.com/photo-1580477667995-2b94f01c9516?w=300&h=200&fit=crop" },
+    { id: 12, name: "Running Shoes", category: "clothing", price: 89.99, rating: 4.5, image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=300&h=200&fit=crop" }
+];
+        
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const categoryFilters = document.getElementById('categoryFilters');
+        const priceFilters = document.getElementById('priceFilters');
+        const sortSelect = document.getElementById('sortSelect');
+        
+        // Current filters and sort
+        let currentCategory = 'all';
+        let currentPriceRange = 'all';
+        let currentSort = 'default';
+        
+        // Initialize the product listing
+        document.addEventListener('DOMContentLoaded', renderProducts);
+        
+        // Event Listeners
+        categoryFilters.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-option')) {
+                // Update active button
+                document.querySelectorAll('#categoryFilters .filter-option').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Set current category and render products
+                currentCategory = e.target.dataset.category;
+                renderProducts();
+            }
+        });
+        
+        priceFilters.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-option')) {
+                // Update active button
+                document.querySelectorAll('#priceFilters .filter-option').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Set current price range and render products
+                currentPriceRange = e.target.dataset.price;
+                renderProducts();
+            }
+        });
+        
+        sortSelect.addEventListener('change', function() {
+            currentSort = this.value;
+            renderProducts();
+        });
+        
+        // Product Functions
+        function renderProducts() {
+            // Filter products
+            let filteredProducts = products.filter(product => {
+                // Category filter
+                if (currentCategory !== 'all' && product.category !== currentCategory) {
+                    return false;
+                }
+                
+                // Price range filter
+                if (currentPriceRange !== 'all') {
+                    const [min, max] = currentPriceRange.split('-').map(Number);
+                    if (product.price < min || product.price > max) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            // Sort products
+            filteredProducts = sortProducts(filteredProducts, currentSort);
+            
+            // Clear products grid
+            productsGrid.innerHTML = '';
+            
+            // Render each product
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>No products found matching your criteria</h3>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
+            } else {
+                filteredProducts.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    
+                    productCard.innerHTML = `
+                        <div class="product-img">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <span class="product-category">${product.category}</span>
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <div class="product-rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))} ${product.rating}</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    `;
+                    
+                    productsGrid.appendChild(productCard);
+                });
+            }
+        }
+        
+        function sortProducts(products, sortMethod) {
+            return [...products].sort((a, b) => {
+                switch (sortMethod) {
+                    case 'price-low':
+                        return a.price - b.price;
+                    case 'price-high':
+                        return b.price - a.price;
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    default:
+                        return 0;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
